@@ -9,6 +9,20 @@
 <body>
 <div id="map" class="map-container"></div>
 
+<div id="activity-form" class="form-container">
+  <button class="close-btn" (click)="closeForm()">✖</button>
+  <h2>Crear Actividad</h2>
+  <label for="title">Título:</label>
+  <input type="text" id="title" required>
+
+  <label for="description">Descripción:</label>
+  <textarea id="description" required></textarea>
+
+  <label for="image">Imagen:</label>
+  <input type="file" id="image" accept="image/*">
+
+  <button (click)="addActivity()">Agregar Actividad</button>
+</div>
 </body>
 </html>
 
