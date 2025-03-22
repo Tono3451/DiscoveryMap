@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.map-container {
+  height: 100vh; /* Ocupa el 100% del viewport height */
+  width: 100vw;  /* Ocupa el 100% del viewport width */
+  margin: 0;
+  padding: 0;
+}
