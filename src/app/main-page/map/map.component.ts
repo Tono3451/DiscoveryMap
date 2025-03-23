@@ -1,14 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-map',
-  imports: [],
+  imports: [
+    NgIf,
+    NgForOf
+  ],
   templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  styleUrls: ['./map.component.css'],
+  standalone: true
 })
 export class MapComponent implements OnInit {
+
   private map!: L.Map;
+  private provider = new OpenStreetMapProvider();
+  public searchResults: any[] = [];
   private activityForm!: HTMLDivElement;
   private selectedLatLng!: L.LatLng;
 
@@ -29,6 +38,7 @@ export class MapComponent implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+
 
     // Mover el control de zoom a la esquina inferior derecha
     L.control.zoom({
@@ -80,5 +90,28 @@ export class MapComponent implements OnInit {
 
     this.closeForm();
     (document.getElementById('activity-form') as HTMLFormElement).reset();
+  }
+
+  onSearch(query: string): void {
+    this.provider.search({ query }).then((results) => {
+      this.searchResults = results;
+    });
+  }
+
+  selectResult(result: any): void {
+    const latlng = L.latLng(result.y, result.x);
+    this.map.setView(latlng, 13);
+  }
+
+  toggleDropdown(): void {
+    const dropdown = document.getElementById('dropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('open');
+    }
+  }
+
+  clearSearch(searchInput: HTMLInputElement): void {
+    searchInput.value = '';
+    this.searchResults = [];
   }
 }

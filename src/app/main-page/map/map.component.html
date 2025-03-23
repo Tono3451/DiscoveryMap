@@ -7,6 +7,22 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
+
+<div id="geosearch-container" class="map-container">
+  <form (submit)="onSearch(search.value); $event.preventDefault();">
+    <div class="search-container">
+      <input type="text" id="search" name="search" placeholder="Buscar..." #search>
+      <button type="button" class="clear-button" (click)="clearSearch(search)">✖</button>
+    </div>
+    <button type="submit">Buscar</button>
+  </form>
+  <div *ngIf="searchResults.length > 0" class="results-container">
+    <button *ngFor="let result of searchResults" (click)="selectResult(result)" class="search-result-button">
+      {{ result.label }}
+    </button>
+  </div>
+</div>
+
 <div id="map" class="map-container"></div>
 
 <div id="activity-form" class="form-container">
