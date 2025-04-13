@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { NgForOf, NgIf } from '@angular/common';
+import {RouterLink} from '@angular/router';
+import { Auth, onAuthStateChanged, User} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-map',
   imports: [
     NgIf,
-    NgForOf
+    NgForOf,
+    RouterLink
   ],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
@@ -20,12 +23,16 @@ export class MapComponent implements OnInit {
   public searchResults: any[] = [];
   private activityForm!: HTMLDivElement;
   private selectedLatLng!: L.LatLng;
+  user: User | null = null;
 
-  constructor() { }
+  constructor(private auth: Auth) { }
 
   ngOnInit(): void {
     this.initMap();
     this.initForm();
+    onAuthStateChanged(this.auth, (user) =>{
+      this.user = user;
+    });
   }
 
   private initMap(): void {
