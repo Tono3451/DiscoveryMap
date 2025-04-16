@@ -1,0 +1,22 @@
+<div class="filter-card">
+  <h2>Filter Memories</h2>
+
+  <label for="title">Title:</label>
+  <input type="text" id="title" [(ngModel)]="filters.title" placeholder="Search by title">
+
+  <label for="category">Category:</label>
+  <select id="category" [(ngModel)]="filters.category">
+    <option value="">All</option>
+    <option value="Turismo">Turism</option>
+    <option value="historia">History</option>
+    <option value="aventura">Adventure</option>
+  </select>
+
+  <label for="date">Date:</label>
+  <input type="date" id="date" [(ngModel)]="filters.date">
+
+  <div class="buttons">
+    <button (click)="applyFilters()">Apply</button>
+    <button class="reset" (click)="resetFilters()">Reset</button>
+  </div>
+</div>
