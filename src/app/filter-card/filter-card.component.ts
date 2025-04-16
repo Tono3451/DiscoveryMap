@@ -11,8 +11,9 @@ import {FormsModule} from '@angular/forms';
 })
 export class FilterCardComponent {
   filters = {
-    title: '',
+    location: '',
     category: '',
+    privacy: '',
     date: ''
   };
 
@@ -24,8 +25,9 @@ export class FilterCardComponent {
 
   resetFilters() {
     this.filters = {
-      title: '',
+      location: '',
       category: '',
+      privacy: '',
       date: ''
     };
     this.filtersApplied.emit(this.filters);
