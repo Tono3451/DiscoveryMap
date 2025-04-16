@@ -1,0 +1,12 @@
+<div class="perfil-container">
+  <h2>Perfil de Usuario</h2>
+
+  <div class="perfil-info">
+    <img *ngIf="user?.photoURL" [src]="user?.photoURL" alt="Foto de perfil" class="profile-img" />
+    <p><strong>Correo electrónico:</strong> {{ user?.email }}</p>
+    <p><strong>UID:</strong> {{ user?.uid }}</p>
+  </div>
+
+  <button (click)="logout()" class="logout-btn">Cerrar sesión</button>
+  <button [routerLink]="['/']" class="back-btn">Volver al inicio</button>
+</div>
