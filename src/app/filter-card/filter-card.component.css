@@ -1,0 +1,45 @@
+.filter-card {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-card h2 {
+  margin-top: 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+input, select {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+}
+
+button.reset {
+  background-color: #dc3545;
+}

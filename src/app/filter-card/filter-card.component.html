@@ -1,0 +1,28 @@
+<div class="filter-card">
+  <h2>Filter Memories</h2>
+
+  <label for="location">Location:</label>
+  <input type="text" id="location" [(ngModel)]="filters.location" placeholder="Search by location">
+
+  <label for="category">Category:</label>
+  <select id="category" [(ngModel)]="filters.category">
+    <option value="">All</option>
+    <option value="Tourism">Tourism</option>
+    <option value="Memory">Memory</option>
+    <option value="Activity">Activity</option>
+  </select>
+
+  <label for="privacy">Privacy:</label>
+  <select id="privacy" [(ngModel)]="filters.privacy">
+    <option value="">All</option>
+    <option value="Friends">Friends</option>
+  </select>
+
+  <label for="date">Date:</label>
+  <input type="date" id="date" [(ngModel)]="filters.date">
+
+  <div class="buttons">
+    <button (click)="applyFilters()">Apply</button>
+    <button class="reset" (click)="resetFilters()">Reset</button>
+  </div>
+</div>
