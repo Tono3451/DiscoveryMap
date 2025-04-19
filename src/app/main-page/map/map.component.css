@@ -136,6 +136,91 @@ button:hover {
 .search-result-button:hover {
   background-color: #e2e6ea;
 }
+#activity-form {
+  display: none; /* Inicialmente oculto */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 80%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+/* Estilo del botón de cerrar */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: #ff4c4c;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #ff0000;
+}
+
+/* Estilo de los títulos */
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilos de los campos de formulario */
+label {
+  font-size: 16px;
+  margin: 8px 0;
+  display: block;
+  color: #555;
+}
+
+input, textarea {
+  font-size: 16px;
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+}
+
+input[type="file"] {
+  padding: 10px;
+}
+
+
+
+/* Estilos para el fondo y efecto de pantalla oscura */
+body.overlay-active #activity-form {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Detalles de la animación cuando se muestra el formulario */
+#activity-form.show {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
 
 .form-container {
   display: none;
