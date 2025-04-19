@@ -12,7 +12,10 @@ import {Router, RouterLink} from '@angular/router';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
-  user: any;  // Esto almacenará la información del usuario
+  user: any;
+  activeTab: 'posted' | 'saved' = 'posted';
+  userMemories: any[] = [];
+  savedMemories: any[] = [];
 
   constructor(private auth: Auth, private router: Router) {}
 
