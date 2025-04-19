@@ -4,6 +4,7 @@ import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { NgForOf, NgIf } from '@angular/common';
 import {RouterLink} from '@angular/router';
 import { Auth, onAuthStateChanged, User} from '@angular/fire/auth';
+import {EventService} from '../../services/event-data.service';
 
 @Component({
   selector: 'app-map',
@@ -25,7 +26,7 @@ export class MapComponent implements OnInit {
   private selectedLatLng!: L.LatLng;
   user: User | null = null;
 
-  constructor(private auth: Auth) { }
+  constructor(private auth: Auth, private eventService: EventService) { }
 
   ngOnInit(): void {
     this.initMap();
@@ -33,26 +34,23 @@ export class MapComponent implements OnInit {
     onAuthStateChanged(this.auth, (user) =>{
       this.user = user;
     });
+    this.loadEvents();
   }
 
   private initMap(): void {
-    // Inicializar el mapa
     this.map = L.map('map', {
-      zoomControl: false // Desactiva el control de zoom predeterminado
-    }).setView([40.4168, -3.7038], 6); // Coordenadas de Madrid, España
+      zoomControl: false
+    }).setView([40.4168, -3.7038], 6);
 
-    // Añadir una capa de tiles (por ejemplo, OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
 
-    // Mover el control de zoom a la esquina inferior derecha
     L.control.zoom({
-      position: 'bottomright' // Puedes usar 'topleft', 'topright', 'bottomleft', o 'bottomright'
+      position: 'bottomright'
     }).addTo(this.map);
 
-    // Evento para detectar clics en el mapa
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       this.selectedLatLng = event.latlng;
       this.showForm();
@@ -83,20 +81,34 @@ export class MapComponent implements OnInit {
       return;
     }
 
-    // Crear marcador en el mapa
-    const marker = L.marker(this.selectedLatLng).addTo(this.map);
-    let popupContent = `<h3>${title}</h3><p>${description}</p>`;
-    if (imageUrl) {
-      popupContent += `<img src="${imageUrl}" style="width: 100px; height: auto;">`;
-    }
-    marker.bindPopup(popupContent);
+    const newEvent = {
+      title,
+      description,
+      lat: this.selectedLatLng.lat,
+      lng: this.selectedLatLng.lng,
+      imageUrl,
+      createdAt: Date.now()
+    };
 
-    // Ocultar el formulario
-    this.activityForm.style.display = 'none';
-    (document.getElementById('activity-form') as HTMLFormElement).reset();
+    this.eventService.addEvent(newEvent).then(() => {
+      console.log('Evento guardado en Firestore');
+      this.loadEvents();
 
-    this.closeForm();
-    (document.getElementById('activity-form') as HTMLFormElement).reset();
+      const marker = L.marker(this.selectedLatLng).addTo(this.map);
+      let popupContent = `<h3>${title}</h3><p>${description}</p>`;
+      if (imageUrl) {
+        popupContent += `<img alt="" src="${imageUrl}" style="width: 100px; height: auto;">`;
+      }
+      marker.bindPopup(popupContent);
+
+      this.closeForm();
+      (document.getElementById('activity-form') as HTMLFormElement).reset();
+    }).catch(error => {
+      console.error('Error al guardar el evento:', error);
+      alert('Error al guardar el evento.');
+    });
+
+
   }
 
   onSearch(query: string): void {
@@ -120,5 +132,18 @@ export class MapComponent implements OnInit {
   clearSearch(searchInput: HTMLInputElement): void {
     searchInput.value = '';
     this.searchResults = [];
+  }
+
+  private loadEvents() {
+    this.eventService.getEvents().subscribe(events => {
+      events.forEach(event => {
+        const marker = L.marker([event.lat, event.lng]).addTo(this.map);
+        let popupContent = `<h3>${event.title}</h3><p>${event.description}</p>`;
+        if (event.imageUrl) {
+          popupContent += `<img alt="" src="${event.imageUrl}" style="width: 100px; height: auto;">`;
+        }
+        marker.bindPopup(popupContent);
+      });
+    });
   }
 }
