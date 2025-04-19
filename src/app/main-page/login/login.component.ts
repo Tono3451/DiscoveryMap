@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import {FormsModule} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   styleUrls: ['./login.component.css']
 })
