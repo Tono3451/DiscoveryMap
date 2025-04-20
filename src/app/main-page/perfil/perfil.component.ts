@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth, signOut } from '@angular/fire/auth';
 import {Router, RouterLink} from '@angular/router';
-import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
+import {Firestore, doc, getDoc} from '@angular/fire/firestore';
 import { onAuthStateChanged } from '@angular/fire/auth';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   templateUrl: './perfil.component.html',
   imports: [
-    RouterLink
+    RouterLink,
+    NgIf,
+    NgForOf
   ],
   styleUrls: ['./perfil.component.css']
 })
@@ -28,18 +31,19 @@ export class PerfilComponent implements OnInit {
       if (user) {
         this.user = user;
 
-        const usersRef = collection(this.firestore, 'users');
-        const q = query(usersRef, where('email', '==', user.email));
-        const querySnapshot = await getDocs(q);
+        const userDocRef = doc(this.firestore, 'users', user.uid);
+        const docSnap = await getDoc(userDocRef);
 
-        if (!querySnapshot.empty) {
-          this.userData = querySnapshot.docs[0].data();
+        if (docSnap.exists()) {
+          this.userData = docSnap.data();
         } else {
           console.warn('No se encontraron datos adicionales para este usuario.');
         }
       }
     });
+
   }
+
 
 
   logout() {

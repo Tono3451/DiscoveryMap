@@ -1,23 +1,23 @@
 <div class="login-container">
-  <h2>Iniciar Sesión</h2>
+  <h2>Login</h2>
 
   <!-- Añade (submit)="login($event)" para llamar a tu función -->
   <form (submit)="login($event)">
     <div class="form-group">
-      <label for="email">Correo electrónico</label>
+      <label for="email">Email</label>
       <!-- ngModel + name para que Angular lo maneje -->
       <input
         type="email"
         id="email"
         name="email"
         [(ngModel)]="email"
-        placeholder="ejemplo@ejemplo.com"
+        placeholder="example@example.com"
         required
       />
     </div>
 
     <div class="form-group">
-      <label for="password">Contraseña</label>
+      <label for="password">Password</label>
       <input
         type="password"
         id="password"
@@ -28,11 +28,11 @@
       />
     </div>
 
-    <button type="submit">Entrar</button>
+    <button type="submit">Login</button>
   </form>
 
   <p style="font-size: 0.9em; margin-top: 10px;">
-    ¿Aún no tienes cuenta?
-    <a routerLink="/create-account" title="Crear cuenta">Crea una</a>
+    ¿Don't have an account?
+    <a routerLink="/create-account" title="Crear cuenta">Create account</a>
   </p>
 </div>
