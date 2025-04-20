@@ -11,10 +11,10 @@
 <div id="geosearch-container" class="map-container">
   <form (submit)="onSearch(search.value); $event.preventDefault();">
     <div class="search-container">
-      <input type="text" id="search" name="search" placeholder="Buscar..." #search>
+      <input type="text" id="search" name="search" placeholder="Search..." #search>
       <button type="button" class="clear-button" (click)="clearSearch(search)">✖</button>
     </div>
-    <button type="submit">Buscar</button>
+    <button type="submit">Search</button>
   </form>
   <div *ngIf="searchResults.length > 0" class="results-container">
     <button *ngFor="let result of searchResults" (click)="selectResult(result)" class="search-result-button">
@@ -28,17 +28,17 @@
 
 <div id="activity-form" class="form-container">
   <button class="close-btn" (click)="closeForm()">✖</button>
-  <h2>Crear Actividad</h2>
-  <label for="title">Título:</label>
+  <h2>Create memory</h2>
+  <label for="title">Title:</label>
   <input type="text" id="title" required>
 
-  <label for="description">Descripción:</label>
+  <label for="description">Description:</label>
   <textarea id="description" required></textarea>
 
-  <label for="image">Imagen:</label>
+  <label for="image">Image:</label>
   <input type="file" id="image" accept="image/*">
 
-  <button (click)="addActivity()">Agregar Actividad</button>
+  <button (click)="addActivity()">Add memory</button>
 </div>
 
 <div class="login-icon" *ngIf="!user">
