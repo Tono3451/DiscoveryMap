@@ -8,15 +8,15 @@
     />
     <div class="user-details">
       <h2>
-        {{ userData?.username || user?.displayName || 'Usuario sin nombre' }}
+        {{ userData?.username || user?.displayName || 'User Name' }}
         {{ userData?.lastName ? ' ' + userData.lastName : '' }}
       </h2>
     </div>
   </div>
 
   <div class="perfil-actions">
-    <button (click)="logout()" class="logout-btn">Cerrar sesión</button>
-    <button [routerLink]="['/']" class="back-btn">Volver al inicio</button>
+    <button (click)="logout()" class="logout-btn">Logout</button>
+    <button [routerLink]="['/']" class="back-btn">Return to main page</button>
   </div>
 
   <div class="tabs">

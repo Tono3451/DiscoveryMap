@@ -1,20 +1,20 @@
 <div class="register-container">
   <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
-    <h2>Crear Cuenta</h2>
+    <h2>Create account</h2>
 
     <div class="form-group">
       <label for="username">Nombre</label>
-      <input id="username" type="text" formControlName="username" placeholder="Tu nombre" />
+      <input id="username" type="text" formControlName="username" placeholder="Name" />
       <div *ngIf="accountForm.get('username')?.invalid && accountForm.get('username')?.touched" class="error">
-        El nombre es obligatorio.
+        Name is mandatory.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="lastName">Apellido</label>
-      <input id="lastName" type="text" formControlName="lastName" placeholder="Tu apellido" />
+      <label for="lastName">last name</label>
+      <input id="lastName" type="text" formControlName="lastName" placeholder="last name" />
       <div *ngIf="accountForm.get('lastName')?.invalid && accountForm.get('lastName')?.touched" class="error">
-        El apellido es obligatorio.
+        Last name is mandatory.
       </div>
     </div>
 
@@ -22,31 +22,31 @@
       <label for="email">Email</label>
       <input id="email" type="email" formControlName="email" placeholder="ejemplo@ejemplo.com" />
       <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched" class="error">
-        Introduce un email válido.
+        Introduce a valid email.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="password">Contraseña</label>
+      <label for="password">Password</label>
       <input id="password" type="password" formControlName="password" placeholder="••••••••" />
       <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched" class="error">
-        Mínimo 6 caracteres.
+        6 characters minimum.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="birthdate">Fecha de Nacimiento</label>
+      <label for="birthdate">birth date</label>
       <input id="birthdate" type="date" formControlName="birthdate" />
       <div *ngIf="accountForm.get('birthdate')?.invalid && accountForm.get('birthdate')?.touched" class="error">
-        La fecha es obligatoria.
+        Date is mandatory.
       </div>
     </div>
 
-    <button type="submit">Crear Cuenta</button>
+    <button type="submit">Create account</button>
   </form>
 
   <p>
-    ¿Ya tienes cuenta?
-    <a routerLink="/login">Inicia sesión</a>
+    ¿Already have an account?
+    <a routerLink="/login">Login</a>
   </p>
 </div>
