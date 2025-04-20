@@ -14,7 +14,7 @@
   <div id="geosearch-container" class="map-container">
     <form (submit)="onSearch(search.value); $event.preventDefault();">
       <div class="search-container">
-        <input type="text" id="search" name="search" placeholder="Buscar..." #search>
+        <input type="text" id="search" name="search" placeholder="Search..." #search>
         <button type="button" class="clear-button" (click)="clearSearch(search)">✖</button>
       </div>
       <button type="submit">Search</button>
