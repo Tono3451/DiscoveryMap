@@ -10,6 +10,7 @@ export interface EventData {
   lng: number;
   imageUrl: string;
   createdAt: number;
+  userId: string;
 }
 
 @Injectable({
@@ -19,7 +20,7 @@ export class EventService {
 
   constructor(private firestore: Firestore) {}
 
-  addEvent(event: EventData) {
+  addEvent(event: { title: string; description: string; lat: number; lng: number; imageUrl: string; createdAt: number }) {
     const eventRef = collection(this.firestore, 'events');
     return addDoc(eventRef, {
       ...event,

@@ -75,6 +75,13 @@ export class MapComponent implements OnInit {
     const description = (document.getElementById('description') as HTMLTextAreaElement).value;
     const imageInput = document.getElementById('image') as HTMLInputElement;
     const imageUrl = imageInput.files?.length ? URL.createObjectURL(imageInput.files[0]) : '';
+    const user = this.auth.currentUser;
+    if (!user) {
+      alert('No se ha encontrado al usuario. Asegúrate de que estés autenticado.');
+      return;
+    }
+
+    const { uid } = user
 
     if (!title || !description) {
       alert('Por favor, completa todos los campos.');
@@ -87,7 +94,8 @@ export class MapComponent implements OnInit {
       lat: this.selectedLatLng.lat,
       lng: this.selectedLatLng.lng,
       imageUrl,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      userId: uid
     };
 
     this.eventService.addEvent(newEvent).then(() => {
@@ -105,7 +113,7 @@ export class MapComponent implements OnInit {
       (document.getElementById('activity-form') as HTMLFormElement).reset();
     }).catch(error => {
       console.error('Error al guardar el evento:', error);
-      alert('Error al guardar el evento.');
+      //alert('Error al guardar el evento.');
     });
 
 
