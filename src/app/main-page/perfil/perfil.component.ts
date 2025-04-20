@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth, signOut } from '@angular/fire/auth';
 import {Router, RouterLink} from '@angular/router';
+import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
+import { onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-perfil',
@@ -13,15 +15,32 @@ import {Router, RouterLink} from '@angular/router';
 })
 export class PerfilComponent implements OnInit {
   user: any;
+  userData: any = null;
   activeTab: 'posted' | 'saved' = 'posted';
   userMemories: any[] = [];
   savedMemories: any[] = [];
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private auth: Auth, private router: Router, private firestore: Firestore) {}
+
 
   ngOnInit(): void {
-    this.user = this.auth.currentUser;
+    onAuthStateChanged(this.auth, async (user) => {
+      if (user) {
+        this.user = user;
+
+        const usersRef = collection(this.firestore, 'users');
+        const q = query(usersRef, where('email', '==', user.email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          this.userData = querySnapshot.docs[0].data();
+        } else {
+          console.warn('No se encontraron datos adicionales para este usuario.');
+        }
+      }
+    });
   }
+
 
   logout() {
     signOut(this.auth)

@@ -7,7 +7,10 @@
       class="profile-img"
     />
     <div class="user-details">
-      <h2>{{ user?.displayName || 'Usuario sin nombre' }}</h2>
+      <h2>
+        {{ userData?.username || user?.displayName || 'Usuario sin nombre' }}
+        {{ userData?.lastName ? ' ' + userData.lastName : '' }}
+      </h2>
     </div>
   </div>
 
