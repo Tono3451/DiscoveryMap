@@ -1,0 +1,31 @@
+#lateral_bar {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  height: 100%;
+  width: 100px;
+  z-index: 1;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.bar_button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.bar_button:hover {
+  background-color: #e2e6ea;
+}
+
+.button_text {
+  font-size: 18px;
+  margin: 2px;
+}

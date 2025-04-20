@@ -8,18 +8,22 @@
 </head>
 <body>
 
-<div id="geosearch-container" class="map-container">
-  <form (submit)="onSearch(search.value); $event.preventDefault();">
-    <div class="search-container">
-      <input type="text" id="search" name="search" placeholder="Buscar..." #search>
-      <button type="button" class="clear-button" (click)="clearSearch(search)">✖</button>
+<div id="elements_container">
+  <app-lateral-bar (filterClick)="toggleFilterComponent()" (userClick)="userClicked()"></app-lateral-bar>
+  <app-filter-card *ngIf="showFilterComponent"></app-filter-card>
+  <div id="geosearch-container" class="map-container">
+    <form (submit)="onSearch(search.value); $event.preventDefault();">
+      <div class="search-container">
+        <input type="text" id="search" name="search" placeholder="Buscar..." #search>
+        <button type="button" class="clear-button" (click)="clearSearch(search)">✖</button>
+      </div>
+      <button type="submit">Buscar</button>
+    </form>
+    <div *ngIf="searchResults.length > 0" class="results-container">
+      <button *ngFor="let result of searchResults" (click)="selectResult(result)" class="search-result-button">
+        {{ result.label }}
+      </button>
     </div>
-    <button type="submit">Buscar</button>
-  </form>
-  <div *ngIf="searchResults.length > 0" class="results-container">
-    <button *ngFor="let result of searchResults" (click)="selectResult(result)" class="search-result-button">
-      {{ result.label }}
-    </button>
   </div>
 </div>
 
@@ -41,6 +45,7 @@
   <button (click)="addActivity()">Agregar Actividad</button>
 </div>
 
+<!-- Perfil -->
 <div class="login-icon" *ngIf="!user">
   <a routerLink="/login" title="Iniciar sesión">
     <img src="https://img.icons8.com/ios-filled/24/000000/user.png" alt="Login">
@@ -52,6 +57,7 @@
     <img src="https://img.icons8.com/ios-filled/24/000000/user-male-circle.png" alt="Perfil">
   </a>
 </div>
+<!-- -->
 
 </body>
 </html>

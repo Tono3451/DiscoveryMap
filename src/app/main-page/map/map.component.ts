@@ -5,13 +5,17 @@ import { NgForOf, NgIf } from '@angular/common';
 import {RouterLink} from '@angular/router';
 import { Auth, onAuthStateChanged, User} from '@angular/fire/auth';
 import {EventService} from '../../services/event-data.service';
+import {LateralBarComponent} from '../../lateral-bar/lateral-bar.component';
+import {FilterCardComponent} from '../../lateral-bar/filter-card/filter-card.component';
 
 @Component({
   selector: 'app-map',
   imports: [
     NgIf,
     NgForOf,
-    RouterLink
+    RouterLink,
+    LateralBarComponent,
+    FilterCardComponent
   ],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
@@ -153,5 +157,15 @@ export class MapComponent implements OnInit {
         marker.bindPopup(popupContent);
       });
     });
+  }
+
+  showFilterComponent = false;
+
+  toggleFilterComponent() {
+    this.showFilterComponent = !this.showFilterComponent;
+  }
+
+  userClicked() {
+    console.log('User clicked');
   }
 }
