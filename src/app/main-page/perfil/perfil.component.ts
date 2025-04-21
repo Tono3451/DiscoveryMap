@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth, signOut } from '@angular/fire/auth';
 import {Router, RouterLink} from '@angular/router';
-import {Firestore, doc, getDoc} from '@angular/fire/firestore';
+import {Firestore, doc, getDoc, collection, getDocs, query, where, deleteDoc} from '@angular/fire/firestore';
 import { onAuthStateChanged } from '@angular/fire/auth';
 import {NgForOf, NgIf} from '@angular/common';
+
 
 @Component({
   selector: 'app-perfil',
@@ -36,15 +37,21 @@ export class PerfilComponent implements OnInit {
 
         if (docSnap.exists()) {
           this.userData = docSnap.data();
-        } else {
-          console.warn('No se encontraron datos adicionales para este usuario.');
         }
+
+        // Obtener recuerdos creados por el usuario
+        const eventsRef = collection(this.firestore, 'events');
+        const q = query(eventsRef, where('userId', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+
+        this.userMemories = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
       }
     });
 
   }
-
-
 
   logout() {
     signOut(this.auth)
@@ -56,5 +63,16 @@ export class PerfilComponent implements OnInit {
         console.error('Error al cerrar sesión:', error);
       });
   }
+
+  async deleteMemory(memoryId: string) {
+    try {
+      await deleteDoc(doc(this.firestore, 'events', memoryId));
+      this.userMemories = this.userMemories.filter(memory => memory.id !== memoryId);
+      console.log('Evento eliminado');
+    } catch (error) {
+      console.error('Error al eliminar el evento:', error);
+    }
+  }
+
 
 }

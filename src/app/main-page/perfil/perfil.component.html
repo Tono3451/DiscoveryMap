@@ -26,8 +26,9 @@
 
   <div class="gallery" *ngIf="activeTab === 'posted'">
     <div class="memory-card" *ngFor="let memory of userMemories">
-      <img [src]="memory.imageUrl" alt="Memory" />
+      <img [src]="memory.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image'" alt="Memory" />
       <p>{{ memory.title }}</p>
+      <button (click)="deleteMemory(memory.id)" class="delete-btn">🗑️ Eliminar</button>
     </div>
   </div>
 
